@@ -1,35 +1,19 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Merriweather', serif;
+    box-sizing: border-box;
   }
-  
-  a {
-    color: blue;
-  }
-  
-  p,
-  span {
-    font-size: 1.2 em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #5b5e6d;
-    line-height: 150%;
-  }
-  
-  li {
-    font-size: 1.2em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #5b5e6d;
-    line-height: 135%;
-  }
-  
-  hr {
-    border-top: 1px solid #e2e0e0;
+
+  body{
+    min-height: 200vh;
+    flex-direction: column;
   }
 
   canvas {
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     background-color: black;
-    align-items: center;
-    flex-direction: column;
+
   }
+
+ 
+  
