@@ -24,8 +24,8 @@ let largura = 10;
 let altura = 90;
 
 //Velocidade do jogo
-let xVelocidade = 10;
-let yVelocidade = 10;
+let xVelocidade = 7;
+let yVelocidade = 7;
 
 //Placar Jogador
 let xPlacarEsquerda = 150;
@@ -33,13 +33,12 @@ let xPlacarEsquerda = 150;
 //Placar Oponente
 let xPlacarDireita = 450;
 
-// Posição do placar
+// Tamanho do placar
 let widthPlacar = 40;
 let heigthPlacar = 20;
 let yPlacar = 10;
 
-
-
+//Pontuação
 let meusPontos = 0;
 let pontosOponente = 0;
 
@@ -61,19 +60,23 @@ function drawElements() {
   ctx.fillRect(xRaquete2, yRaquete2, largura, altura);
 
   //Criação do Placar
+  //Placar 1
   ctx.fillStyle = 'orange';
   ctx.fillRect(xPlacarEsquerda, yPlacar, widthPlacar, heigthPlacar);
   ctx.strokeStyle = 'white';
   ctx.strokeRect(xPlacarEsquerda, yPlacar, widthPlacar, heigthPlacar);
   ctx.fillStyle = 'white';
   ctx.font = '15px Calibri';
-  ctx.fillText(meusPontos, (xPlacarEsquerda*2+widthPlacar)/2, yPlacar/2+heigthPlacar);
+  ctx.fillText(meusPontos, 166, yPlacar/2+heigthPlacar);
 
+  //Placar 2
   ctx.fillStyle = 'orange';
   ctx.fillRect(xPlacarDireita, yPlacar, widthPlacar, heigthPlacar);
   ctx.strokeStyle = 'white';
   ctx.strokeRect(xPlacarDireita, yPlacar, widthPlacar, heigthPlacar);
-
+  ctx.fillStyle = 'white';
+  ctx.font = '15px Calibri';
+  ctx.fillText(pontosOponente, 467, yPlacar/2+heigthPlacar);
 }
 
 //Chuva de funções
@@ -87,7 +90,7 @@ function verificaColisão() {
 }
 
 function movimentaRaquete2() {
- //yRaquete2 = yBolinha - altura/8 - 25;
+ yRaquete2 = yBolinha - altura/8 - 25;
 }
 
 function movimentaBolinha() {
@@ -96,26 +99,45 @@ function movimentaBolinha() {
 }
 
 function verificaColisãoRaquete() {
-if(xBolinha + raio === xRaquete2 + largura &&
+if(xBolinha + raio > xRaquete2 + largura/2 &&
   yBolinha - raio < yRaquete2 + altura &&
   yBolinha + raio > yRaquete2) {
   xVelocidade *= -1;
 }
-if(xBolinha - raio === xRaquete1 + largura &&
+if(xBolinha + raio < xRaquete1 + largura &&
    yBolinha - raio < yRaquete1 + altura &&
-   yBolinha + raio > yRaquete1) {
+   yBolinha + raio < yRaquete1) {
   xVelocidade *= -1;
 }
 }
 
 //Marcador de Pontos
-function Pontos(){
+function pontos(){
   if(xBolinha > 585){
     meusPontos += 1;
   }
-  if(xBolinha < 10){
+  if(xBolinha < 15){
     pontosOponente += 1;
   } 
+}
+
+function gameOver() {
+  if(pontosOponente > 1) {
+    ctx.clearRect(0, 0, 600, 400);
+
+    let img = new Image()
+    img.src = 'GameOver.jpg'
+
+    ctx.drawImage(img, 100, 100, 400, 200);
+
+
+  }
+}
+
+function reset() {
+  ctx.clearRect(0, 0, 600, 400);
+  
+
 }
 
 //Função para animação do Game
@@ -126,20 +148,22 @@ function upDateGame() {
   movimentaRaquete2();
   verificaColisão();
   verificaColisãoRaquete();
-  Pontos();
+  pontos();
+  gameOver();
   requestAnimationFrame(upDateGame);
 }
+
+
 
 //Insrução para reconhecimento do Teclado
 document.addEventListener('keydown', (event) => {
   const key = event.code
   if (key === 'KeyW') {
-    yRaquete1 -= 10;
+    yRaquete1 -= 30;
   }
-  if (key === 'KeyZ') {
-    yRaquete1 += 10;
+  if (key === 'KeyS') {
+    yRaquete1 += 30;
   }
 })
 
 upDateGame();
-console.log(meusPontos);
