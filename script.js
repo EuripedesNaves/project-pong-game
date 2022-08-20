@@ -129,7 +129,7 @@ function pontos() {
 }
 
 function gameOver() {
-  if (pontosOponente > 20) {
+  if (pontosOponente > 15) {
     ctx.clearRect(0, 0, 600, 400);
 
     let img = new Image()
@@ -140,13 +140,13 @@ function gameOver() {
 }
 
 function gameWin() {
-  if (meusPontos > 20) {
+  if (meusPontos > 15) {
     ctx.clearRect(0, 0, 600, 400);
 
     let win = new Image()
     win.src = 'YouWin.jpg'
 
-    ctx.drawImage(win, 300, 80, 300, 200);
+    ctx.drawImage(win, 150, 80, 200, 200);
   }
 }
 
