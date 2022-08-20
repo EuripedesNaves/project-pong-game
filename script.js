@@ -43,7 +43,8 @@ let yPlacar = 10;
 //Pontuação
 let meusPontos = 0;
 let pontosOponente = 0;
-let margemDeErro = chanceErro();
+//let margemDeErro = chanceErro();
+let chanceDeErrar = 0;
 
 
 function drawElements() {
@@ -94,7 +95,7 @@ function verificaColisão() {
 //Função para movimentar a raquete2
 function movimentaRaquete2() {
   velocidadeYOponente = yBolinha - altura / 3;
-  yRaquete2 = velocidadeYOponente;
+  yRaquete2 = velocidadeYOponente + chanceDeErrar;
 }
 
 //Função para movimentar a bolinha
@@ -150,9 +151,19 @@ function gameWin() {
 }
 
 function chanceErro() {
-    let chanceDeErrar = (Math.floor(Math.random() * (100 - (-100)) + (-100)));
-    return chanceDeErrar;
-}
+  if (pontosOponente >= meusPontos) {
+    chanceDeErrar += 1;
+    if (chanceDeErrar >= 39){
+    chanceDeErrar = 40;
+    }
+  } else {
+    chanceDeErrar -= 1;
+    if (chanceDeErrar <= 35){
+    chanceDeErrar = 35;
+    }
+  }
+  }
+
 
 
 //Função para animação do Game
