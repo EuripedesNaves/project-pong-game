@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d');
 // Tamanho Canvas
 const width = 600;
 const height = 400;
-
+let frame = 0;
 
 // Dados bolinha 
 let xBolinha = 300;
@@ -20,14 +20,15 @@ let yRaquete1 = 150;
 // Dados Raquete Direita (2)
 let xRaquete2 = 585;
 let yRaquete2 = 150;
+let velocidadeYOponente;
 
 // Dados de altura e largura das Raquetes
 let largura = 10;
 let altura = 90;
 
 //Velocidade do jogo
-let xVelocidade = 3;
-let yVelocidade = 0;
+let xVelocidade = 7;
+let yVelocidade = 7;
 
 //Placar Jogador
 let xPlacarEsquerda = 150;
@@ -43,6 +44,7 @@ let yPlacar = 10;
 //Pontuação
 let meusPontos = 0;
 let pontosOponente = 0;
+let margemDeErro = chanceErro();
 
 
 function drawElements() {
@@ -63,7 +65,7 @@ function drawElements() {
 
   //Criação do Placar
   //Placar 1
-  ctx.fillStyle = 'orange';
+  ctx.fillStyle = '#192592';
   ctx.fillRect(xPlacarEsquerda, yPlacar, widthPlacar, heigthPlacar);
   ctx.strokeStyle = 'white';
   ctx.strokeRect(xPlacarEsquerda, yPlacar, widthPlacar, heigthPlacar);
@@ -72,7 +74,7 @@ function drawElements() {
   ctx.fillText(meusPontos, 166, yPlacar / 2 + heigthPlacar);
 
   //Placar 2
-  ctx.fillStyle = 'orange';
+  ctx.fillStyle = '#192592';
   ctx.fillRect(xPlacarDireita, yPlacar, widthPlacar, heigthPlacar);
   ctx.strokeStyle = 'white';
   ctx.strokeRect(xPlacarDireita, yPlacar, widthPlacar, heigthPlacar);
@@ -92,7 +94,8 @@ function verificaColisão() {
 }
 //Função para movimentar a raquete2
 function movimentaRaquete2() {
-  yRaquete2 = yBolinha - altura / 8 - 25;
+  velocidadeYOponente = yBolinha - altura / 3;
+  yRaquete2 = velocidadeYOponente + chanceErro();
 }
 
 //Função para movimentar a bolinha
@@ -108,9 +111,9 @@ function verificaColisãoRaquete() {
     yBolinha + raio > yRaquete2) {
     xVelocidade *= -1;
   }
-  if (xBolinha + raio < xRaquete1 + largura &&
-    yBolinha + raio < yRaquete1 + altura &&
-    yBolinha + raio < yRaquete1) {
+  if (xBolinha - raio < xRaquete1 + largura &&
+    yBolinha - raio < yRaquete1 + altura &&
+    yBolinha + raio > yRaquete1) {
     xVelocidade *= -1;
   }
 }
@@ -126,7 +129,7 @@ function pontos() {
 }
 
 function gameOver() {
-  if (pontosOponente > 15) {
+  if (pontosOponente > 20) {
     ctx.clearRect(0, 0, 600, 400);
 
     let img = new Image()
@@ -136,17 +139,36 @@ function gameOver() {
   }
 }
 
+function gameWin() {
+  if (meusPontos > 20) {
+    ctx.clearRect(0, 0, 600, 400);
+
+    let win = new Image()
+    win.src = 'YouWin.jpg'
+
+    ctx.drawImage(win, 200, 50, 150, 200);
+  }
+}
+
+function chanceErro() {
+    let chanceDeErrar = (Math.floor(Math.random() * (100 - (-100)) + (-100)));
+    return chanceDeErrar;
+}
+
 
 //Função para animação do Game
 function upDateGame() {
+  frame += 1;
   ctx.clearRect(0, 0, 600, 400);
   drawElements();
   movimentaBolinha();
-  movimentaRaquete2();
   verificaColisão();
   verificaColisãoRaquete();
+  movimentaRaquete2();
   pontos();
   gameOver();
+  gameWin();
+  console.log(chanceErro());
   requestAnimationFrame(upDateGame);
 }
 
@@ -162,9 +184,13 @@ document.addEventListener('keydown', (event) => {
   }
 })
 
-// -------------------------------------------------------------------------
+function drawStart() {
 
+  let startImg = new Image();
+  startImg = 'Start.jpg';
 
+  ctx.drawImage(startImg, 150, 100, 400, 200);
+}
 
 
 
