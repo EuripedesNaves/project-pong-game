@@ -5,7 +5,6 @@ const ctx = canvas.getContext('2d');
 // Tamanho Canvas
 const width = 600;
 const height = 400;
-let frame = 0;
 
 // Dados bolinha 
 let xBolinha = 300;
