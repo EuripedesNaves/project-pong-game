@@ -65,7 +65,7 @@ function drawElements() {
 
   //Criação do Placar
   //Placar 1
-  ctx.fillStyle = '#192592';
+  ctx.fillStyle = 'orange';
   ctx.fillRect(xPlacarEsquerda, yPlacar, widthPlacar, heigthPlacar);
   ctx.strokeStyle = 'white';
   ctx.strokeRect(xPlacarEsquerda, yPlacar, widthPlacar, heigthPlacar);
@@ -74,7 +74,7 @@ function drawElements() {
   ctx.fillText(meusPontos, 166, yPlacar / 2 + heigthPlacar);
 
   //Placar 2
-  ctx.fillStyle = '#192592';
+  ctx.fillStyle = 'orange';
   ctx.fillRect(xPlacarDireita, yPlacar, widthPlacar, heigthPlacar);
   ctx.strokeStyle = 'white';
   ctx.strokeRect(xPlacarDireita, yPlacar, widthPlacar, heigthPlacar);
@@ -95,7 +95,7 @@ function verificaColisão() {
 //Função para movimentar a raquete2
 function movimentaRaquete2() {
   velocidadeYOponente = yBolinha - altura / 3;
-  yRaquete2 = velocidadeYOponente + chanceErro();
+  yRaquete2 = velocidadeYOponente;
 }
 
 //Função para movimentar a bolinha
@@ -146,7 +146,7 @@ function gameWin() {
     let win = new Image()
     win.src = 'YouWin.jpg'
 
-    ctx.drawImage(win, 200, 50, 150, 200);
+    ctx.drawImage(win, 300, 80, 300, 200);
   }
 }
 
@@ -158,7 +158,7 @@ function chanceErro() {
 
 //Função para animação do Game
 function upDateGame() {
-  frame += 1;
+
   ctx.clearRect(0, 0, 600, 400);
   drawElements();
   movimentaBolinha();
